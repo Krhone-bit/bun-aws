@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <style>
+        :root {
+            --baseColor: #606468;
+        }
+
+        :root {
+            --iconFill: var(--baseColor);
+        }
+
+        :root {
+            --htmlFontSize: 100%;
+
+            --bodyBackgroundColor: #2c3338;
+            --bodyColor: var(--baseColor);
+            --bodyFontFamily: "Open Sans";
+            --bodyFontFamilyFallback: sans-serif;
+            --bodyFontSize: 0.875rem;
+            --bodyFontWeight: 400;
+            --bodyLineHeight: 1.5;
+        }
+
+        * {
+            box-sizing: inherit;
+        }
+
+
+        html {
+            box-sizing: border-box;
+            font-size: var(--htmlFontSize);
+        }
+
+        body {
+            background-color: var(--bodyBackgroundColor);
+            color: var(--bodyColor);
+            font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
+            font-size: var(--bodyFontSize);
+            font-weight: var(--bodyFontWeight);
+            line-height: var(--bodyLineHeight);
+            margin: 0;
+            min-block-size: 100vh;
+        }
+
+        :root {
+            --anchorColor: #eee;
+        }
+
+        .align {
+            display: grid;
+            place-items: center;
+        }
+
+        .grid {
+            inline-size: 90%;
+            margin-inline: auto;
+            max-inline-size: 20rem;
+        }
+
+        .form {
+            position: relative;
+            z-index: 1;
+            background: #FFFFFF;
+            max-width: 360px;
+            margin: 0 auto 100px;
+            padding: 45px;
+            text-align: center;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        }
+
+        .form input {
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            background: #f2f2f2;
+            width: 100%;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .form button {
+            font-family: "Roboto", sans-serif;
+            text-transform: uppercase;
+            outline: 0;
+            background: #4CAF50;
+            width: 100%;
+            border: 0;
+            padding: 15px;
+            color: #FFFFFF;
+            font-size: 14px;
+            -webkit-transition: all 0.3 ease;
+            transition: all 0.3 ease;
+            cursor: pointer;
+        }
+
+        .form button:hover,
+        .form button:active,
+        .form button:focus {
+            background: #43A047;
+        }
+
+        .code-container {
+            overflow: auto;
+            position: relative;
+            background-color: #002b36;
+            color: #ffffff;
+            padding: 10px 10px 10px 20px;
+            border-radius: 5px;
+            font-family: monospace;
+            display: inline-block;
+            margin: 20px;
+        }
+
+        .code-container .copy-button {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            background-color: #004466;
+            border: none;
+            color: #ffffff;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .code-container .copy-button:hover {
+            background-color: #006699;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Login</h1>
+    <% if (isAdmin) { %>
+        <form id="loginForm" class="form" action="/auth/login/admin" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" value="K2~hng2@24!#.-/'%^?_><," name="password" required>
+            <br>
+            <button type="submit">Login Admin</button>
+        </form>
+        <% } else { %>
+            <form id="loginForm" class="form" action="/auth/login" method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <button type="submit">Login</button>
+            </form>
+            <% } %>
+
+                <div class="code-container" id="tokenIdContainer" style="display:none;">
+                    <pre id="tokenId"></pre>
+                    <button class="copy-button" onclick="copyToClipboard('tokenId')">Copy tokenId</button>
+                </div>
+                <div class="code-container" id="accessTokenContainer" style="display:none;">
+                    <pre id="accessToken"></pre>
+                    <button class="copy-button" onclick="copyToClipboard('accessToken')">Copy accessToken</button>
+                </div>
+
+                <script>
+                    document.getElementById('loginForm').addEventListener('submit', async function (event) {
+                        event.preventDefault();
+                        const formData = new FormData(this);
+                        const data = {
+                            username: formData.get('username'),
+                            password: formData.get('password')
+                        };
+
+                        const response = await fetch(this.action, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+
+                        const result = await response.json();
+
+                        if (result.tokenId && result.accessToken) {
+                            document.getElementById('tokenId').innerText = result.tokenId;
+                            document.getElementById('tokenIdContainer').style.display = 'block';
+
+                            document.getElementById('accessToken').innerText = result.accessToken;
+                            document.getElementById('accessTokenContainer').style.display = 'block';
+                        }
+                    });
+
+                    function copyToClipboard(elementId) {
+                        const text = document.getElementById(elementId).innerText;
+                        navigator.clipboard.writeText(text).then(() => {
+                            // alert('Copied to clipboard!');
+                        }).catch(err => {
+                            console.error('Failed to copy!', err);
+                        });
+                    }
+                </script>
+</body>
+
+</html>
