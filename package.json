@@ -4,7 +4,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
-    "serve": "bun run src/index.ts"
+    "serve": "PORT=8000 bun run src/index.ts"
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.556.0",
