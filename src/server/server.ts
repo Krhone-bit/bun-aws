@@ -1,5 +1,5 @@
 import { Elysia } from "elysia";
-import * as authRouter from "../auth/auth.js";
+import * as authRouter from "../auth/auth.controller.js";
 
 export class Server {
   private app: Elysia;
