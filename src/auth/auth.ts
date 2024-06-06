@@ -10,40 +10,17 @@ import { join } from "path";
 
 export class AuthConfig {
   private client = new CognitoIdentityProviderClient({
-    region: "us-east-1",
+    region: process.env.REGION,
   });
 
   public async signIn(email: string, password: string) {
     try {
-      const email_ = `hng_${email}@k2.com.pe`;
-      const pass_ = `a${password}A@`;
       const input: InitiateAuthCommandInput = {
         AuthFlow: "USER_PASSWORD_AUTH",
-        ClientId: "5l27rkkjrpc8om8eo4ocsqoa8q",
+        ClientId: process.env.CLIENT_ID,
         AuthParameters: {
-          USERNAME: email_,
-          PASSWORD: pass_,
-        },
-      };
-
-      const command = new InitiateAuthCommand(input);
-      const response = await this.client.send(command);
-      return response.AuthenticationResult;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async signInAdmin(email: string, password: string) {
-    try {
-      const email_ = email;
-      const pass_ = `K2~hng2@24!#.-/'%^?_><,`;
-      const input: InitiateAuthCommandInput = {
-        AuthFlow: "USER_PASSWORD_AUTH",
-        ClientId: "5l27rkkjrpc8om8eo4ocsqoa8q",
-        AuthParameters: {
-          USERNAME: email_,
-          PASSWORD: pass_,
+          USERNAME: email,
+          PASSWORD: password,
         },
       };
 
@@ -92,23 +69,3 @@ app.post(
     body: UserLoginSchema,
   }
 );
-
-// Ruta para manejar el inicio de sesión de administradores
-app.post(
-  "/auth/login/admin",
-  async ({ body }) => {
-    const { username, password } = body;
-    const auth = new AuthConfig();
-    const resp: any = await auth.signInAdmin(username, password);
-    return {
-      tokenId: resp.IdToken,
-      accessToken: resp.AccessToken,
-    };
-  },
-  {
-    body: UserLoginSchema,
-  }
-);
-
-// app.listen(3000);
-// console.log("Server running at http://localhost:3000");
