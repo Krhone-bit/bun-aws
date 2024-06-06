@@ -8,30 +8,32 @@ To get started with this template, simply paste this command into your terminal:
 bun create elysia ./elysia-example
 ```
 
-## Configuración de AWS CLI con `aws configure`
+## Configuring AWS CLI with `aws configure`
 
-#### 1. Instalar AWS CLI
+### Step-by-Step Guide to Configuring AWS CLI
 
-Antes de configurar AWS CLI, asegúrate de tenerlo instalado en tu sistema. Si no lo tienes instalado, puedes seguir las instrucciones oficiales de AWS para instalar AWS CLI: [Instalar AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
+#### 1. Install AWS CLI
 
-#### 2. Ejecutar `aws configure`
+Before configuring AWS CLI, ensure you have it installed on your system. If you haven't installed it yet, follow the official AWS instructions to install AWS CLI: [Install AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
 
-Abre tu terminal o línea de comandos y ejecuta el siguiente comando:
+#### 2. Run `aws configure`
+
+Open your terminal or command prompt and execute the following command:
 
 ```bash
 aws configure
 ```
 
-Este comando te pedirá que ingreses los siguientes valores:
+This command will prompt you to enter the following values:
 
-- **AWS Access Key ID**: Tu ID de clave de acceso de AWS.
-- **AWS Secret Access Key**: Tu clave de acceso secreta de AWS.
-- **Default region name**: La región predeterminada para tus comandos de AWS (por ejemplo, `us-west-2`).
-- **Default output format**: El formato de salida predeterminado (por ejemplo, `json`, `text`, `table`).
+- **AWS Access Key ID**: Your AWS access key ID.
+- **AWS Secret Access Key**: Your AWS secret access key.
+- **Default region name**: The default region for your AWS commands (e.g., `us-west-2`).
+- **Default output format**: The default output format (e.g., `json`, `text`, `table`).
 
-#### 3. Proceso de Configuración
+#### 3. Configuration Process
 
-Cuando ejecutas `aws configure`, verás algo similar a lo siguiente:
+When you run `aws configure`, you will see something like this:
 
 ```plaintext
 AWS Access Key ID [None]: YOUR_ACCESS_KEY_ID
@@ -40,16 +42,16 @@ Default region name [None]: YOUR_DEFAULT_REGION
 Default output format [None]: json
 ```
 
-Reemplaza `YOUR_ACCESS_KEY_ID`, `YOUR_SECRET_ACCESS_KEY`, y `YOUR_DEFAULT_REGION` con tus valores específicos. Puedes elegir el formato de salida que prefieras (en este ejemplo, se utiliza `json`).
+Replace `YOUR_ACCESS_KEY_ID`, `YOUR_SECRET_ACCESS_KEY`, and `YOUR_DEFAULT_REGION` with your specific values. You can choose the output format you prefer (in this example, `json` is used).
 
-#### 4. Archivos de Configuración
+#### 4. Configuration Files
 
-Los valores ingresados se guardan en los siguientes archivos:
+The entered values are saved in the following files:
 
-- **Credenciales**: `~/.aws/credentials`
-- **Configuración**: `~/.aws/config`
+- **Credentials**: `~/.aws/credentials`
+- **Configuration**: `~/.aws/config`
 
-#### Ejemplo de Archivo `credentials`
+#### Example `credentials` File
 
 ```plaintext
 [default]
@@ -57,7 +59,7 @@ aws_access_key_id = YOUR_ACCESS_KEY_ID
 aws_secret_access_key = YOUR_SECRET_ACCESS_KEY
 ```
 
-#### Ejemplo de Archivo `config`
+#### Example `config` File
 
 ```plaintext
 [default]
@@ -65,15 +67,15 @@ region = YOUR_DEFAULT_REGION
 output = json
 ```
 
-### Validar la Configuración
+### Validate the Configuration
 
-Para asegurarte de que la configuración se ha realizado correctamente, puedes ejecutar un comando simple de AWS CLI, como listar tus buckets de S3:
+To ensure the configuration has been set up correctly, you can run a simple AWS CLI command, such as listing your S3 buckets:
 
 ```bash
 aws s3 ls
 ```
 
-Si todo está configurado correctamente, deberías ver una lista de tus buckets de S3 (si tienes alguno).
+If everything is configured correctly, you should see a list of your S3 buckets (if you have any).
 
 ## Development
 
